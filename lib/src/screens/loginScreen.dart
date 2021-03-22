@@ -139,7 +139,7 @@ class LoginScreen extends StatelessWidget {
      {
      // save user details to database
       
-      usersRef.child(_firebaseUser.uid).once().then((DataSnapshot snap)
+      driversRef.child(_firebaseUser.uid).once().then((DataSnapshot snap)
       {
         if(snap.value != null)
         {

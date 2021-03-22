@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
 import 'package:jitney_cabs_driver/src/providers/appData.dart';
 import 'package:jitney_cabs_driver/src/screens/RegistrationScreen.dart';
+import 'package:jitney_cabs_driver/src/screens/carInfoScreen.dart';
 import 'package:jitney_cabs_driver/src/screens/home.dart';
 import 'package:jitney_cabs_driver/src/screens/loginScreen.dart';
 import 'package:provider/provider.dart';
@@ -33,12 +34,13 @@ class MyApp extends StatelessWidget {
           primarySwatch: orange,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: FirebaseAuth.instance.currentUser == null ? LoginScreen.idScreen : HomeScreen.idScreen,
+        initialRoute: HomeScreen.idScreen,
         routes:
         {
            RegistrationScreen.idScreen:(context)=> RegistrationScreen(),
            LoginScreen.idScreen:(context)=> LoginScreen(),
            HomeScreen.idScreen:(context)=> HomeScreen(),
+           CarInfoScreen.idScreen:(context)=> CarInfoScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),
