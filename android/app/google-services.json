@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "294845978737",
+    "firebase_url": "https://jitney-cabs-dc352-default-rtdb.firebaseio.com",
+    "project_id": "jitney-cabs-dc352",
+    "storage_bucket": "jitney-cabs-dc352.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294845978737:android:750b15b6e6c1f438d123d0",
+        "android_client_info": {
+          "package_name": "com.karios.jitney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294845978737-qda8dqlmp3rlsokl0feiv77rmetpg6bg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG1-AWjvpqmmq1HaLggAPiG1YV3u0ak8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294845978737-qda8dqlmp3rlsokl0feiv77rmetpg6bg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294845978737:android:273e29c0d70dd733d123d0",
+        "android_client_info": {
+          "package_name": "com.karios.jitneydriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294845978737-qda8dqlmp3rlsokl0feiv77rmetpg6bg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG1-AWjvpqmmq1HaLggAPiG1YV3u0ak8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294845978737-qda8dqlmp3rlsokl0feiv77rmetpg6bg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
