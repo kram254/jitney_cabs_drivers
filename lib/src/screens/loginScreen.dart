@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jitney_cabs_driver/main.dart';
+import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
 import 'package:jitney_cabs_driver/src/helpers/toastDisplay.dart';
 import 'package:jitney_cabs_driver/src/screens/RegistrationScreen.dart';
@@ -143,6 +144,7 @@ class LoginScreen extends StatelessWidget {
       {
         if(snap.value != null)
         {
+          currentfirebaseUser = firebaseUser;
           Navigator.pushNamedAndRemoveUntil(context, HomeScreen.idScreen, (route) => false);
           displayToastMessage("You're logged in successfully.", context);
         }
@@ -150,7 +152,7 @@ class LoginScreen extends StatelessWidget {
         {
           Navigator.pop(context);
           _firebaseAuth.signOut();
-          displayToastMessage("This user doesn't exist. Please create new user account", context);
+          displayToastMessage("This user doesn't exist. Please create new driver account", context);
         }
       });
       
