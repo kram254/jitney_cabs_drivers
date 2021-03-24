@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:jitney_cabs_driver/src/assistants/assistantMethods.dart';
+import 'package:jitney_cabs_driver/main.dart';
+import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 
 class HomeTab extends StatelessWidget {
 
@@ -75,7 +77,8 @@ GoogleMapController newGoogleMapController;
                      child: RaisedButton(
                        onPressed: ()
                        {
-                               
+                          makeDriverOnlineNow();
+                          getLocationLiveUpdates();
                         }, 
                      color: Colors.greenAccent[700],   
                      child: Padding(
@@ -83,7 +86,7 @@ GoogleMapController newGoogleMapController;
                        child: Row(
                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
-                             Text("Online now", style: TextStyle(color: white,fontSize: 20.0,fontWeight: FontWeight.bold),),
+                             Text("Offline now - Go online", style: TextStyle(color: white,fontSize: 20.0,fontWeight: FontWeight.bold),),
                               Icon(Icons.phone_android, color: white, size: 26.0,),
                             ],
                         ),
@@ -97,5 +100,30 @@ GoogleMapController newGoogleMapController;
     );
       
     
+  }
+
+  void makeDriverOnlineNow () async
+  {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    currentPosition = position;
+    Geofire.initialize("availableDrivers");
+    Geofire.setLocation(currentfirebaseUser.uid, currentPosition.latitude, currentPosition.longitude);
+    
+    rideRequestRef.onValue.listen((event) 
+    { 
+
+    });
+  }
+
+  //getting the drivers live location
+  void getLocationLiveUpdates()
+  {
+    homeTabStreamSubscription = Geolocator.getPositionStream().listen((Position position)
+    {
+      currentPosition = position;
+      Geofire.setLocation(currentfirebaseUser.uid, position.latitude, position.longitude);
+      LatLng latLng = LatLng(position.latitude, position.longitude);
+      newGoogleMapController.animateCamera(CameraUpdate.newLatLng(latLng));
+     });
   }
 }
