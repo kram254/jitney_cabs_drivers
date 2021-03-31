@@ -36,6 +36,12 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
         </activity>
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCG1-AWjvpqmmq1HaLggAPiG1YV3u0ak8Y"/>
