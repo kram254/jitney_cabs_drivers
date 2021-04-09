@@ -63,6 +63,7 @@ GoogleMapController newGoogleMapController;
      currentfirebaseUser = await FirebaseAuth.instance.currentUser;
      PushNotificationService pushNotificationService = PushNotificationService();
 
+     pushNotificationService.initialize(context);
      pushNotificationService.getToken();
   }
 
