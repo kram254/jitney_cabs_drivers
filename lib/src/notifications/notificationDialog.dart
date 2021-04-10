@@ -1,7 +1,11 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
+import 'package:jitney_cabs_driver/src/helpers/toastDisplay.dart';
 import 'package:jitney_cabs_driver/src/models/rideDetails.dart';
+import 'package:jitney_cabs_driver/main.dart';
+import 'package:jitney_cabs_driver/src/screens/newRideScreen.dart';
 
 class NotificationDialog extends StatelessWidget
 {
@@ -107,7 +111,7 @@ class NotificationDialog extends StatelessWidget
                          ),
                          onPressed: (){
                            assetsAudioPlayer.stop();
-                           Navigator.pop(context);
+                           checkAvailabilityOfRide(context);
                          },
                          color: Colors.green,
                          textColor: white,
@@ -121,9 +125,45 @@ class NotificationDialog extends StatelessWidget
                      ],
                    ),
                  ),
+                 SizedBox(height: 8.0),
              ],
              ),
          ),
      );
+  }
+
+  void checkAvailabilityOfRide(context)
+  {
+    rideRequestRef.once().then((DataSnapshot dataSnapShot)
+    {
+    Navigator.pop(context);
+    String theRideId = " ";
+    if(dataSnapShot.value != null)
+    {
+       theRideId = dataSnapShot.value.toString();
+      }
+      else
+      {
+        displayToastMessage("Ride does not exist", context);
+      }
+     if(theRideId == rideDetails.ride_request_id)
+     {
+      rideRequestRef.set("accepted");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> NewRideScreen(rideDetails: rideDetails)));
+     }
+     else if(theRideId == "cancelled")
+     {
+       displayToastMessage("Ride was cancelled", context);
+     }
+     else if(theRideId == "timeout")
+     {
+       displayToastMessage("Ride has timed out", context);
+     }
+     else
+      {
+        displayToastMessage("Ride does not exist", context);
+      }
+    });
+    
   }
 }

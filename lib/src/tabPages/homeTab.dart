@@ -163,6 +163,7 @@ GoogleMapController newGoogleMapController;
     Geofire.initialize("availableDrivers");
     Geofire.setLocation(currentfirebaseUser.uid, currentPosition.latitude, currentPosition.longitude);
     
+    rideRequestRef.set("searching");
     rideRequestRef.onValue.listen((event) 
     { 
 
