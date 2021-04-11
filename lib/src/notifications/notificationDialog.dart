@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:jitney_cabs_driver/src/assistants/assistantMethods.dart';
 import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
 import 'package:jitney_cabs_driver/src/helpers/toastDisplay.dart';
@@ -149,6 +150,7 @@ class NotificationDialog extends StatelessWidget
      if(theRideId == rideDetails.ride_request_id)
      {
       rideRequestRef.set("accepted");
+      AssistantMethods.disableHomeTabLiveLocationUpdates();
       Navigator.push(context, MaterialPageRoute(builder: (context)=> NewRideScreen(rideDetails: rideDetails)));
      }
      else if(theRideId == "cancelled")

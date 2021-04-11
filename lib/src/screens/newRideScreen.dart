@@ -1,12 +1,17 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jitney_cabs_driver/src/assistants/assistantMethods.dart';
+import 'package:jitney_cabs_driver/src/assistants/mapKitAssistant.dart';
 import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
 import 'package:jitney_cabs_driver/src/models/rideDetails.dart';
+import 'package:jitney_cabs_driver/src/widgets/collectFareDialog.dart';
 import 'package:jitney_cabs_driver/src/widgets/progressDialog.dart';
 import 'package:jitney_cabs_driver/main.dart';
 
@@ -33,6 +38,17 @@ class _NewRideScreenState extends State<NewRideScreen>
  List <LatLng> polyLineCordinates = [];
  PolylinePoints polylinePoints = PolylinePoints();
  double mapPaddingFromBottom = 0;
+ var geolocator = Geolocator();
+ var locationOptions = LocationOptions(accuracy: LocationAccuracy.bestForNavigation);
+ BitmapDescriptor animatingMarkerIcon;
+ Position myPosition;
+ String status = "accepted";
+ String durationRide = "";
+ bool isRequestingDirection = false;
+ String btnTitle = "Arrived";
+ Color btnColor = Colors.blueAccent;
+ Timer timer;
+ int durationCounter =0;
 
  @override
    void initState() {
@@ -40,9 +56,67 @@ class _NewRideScreenState extends State<NewRideScreen>
      acceptRideRequest();
    }
 
+ void createIconMarker()
+  {
+    if( animatingMarkerIcon == null)
+    {
+      ImageConfiguration imageConfiguration = createLocalImageConfiguration(context, size: Size(2, 2));
+      //adding the drivers car image icon
+      BitmapDescriptor.fromAssetImage(imageConfiguration, "images/car_android.png")
+      .then((value)
+      {
+        animatingMarkerIcon = value;
+      } );
+
+    }
+  } 
+
+  void getRideLiveLocationUpdates()
+  {
+    LatLng oldPos = LatLng(0, 0);
+
+    rideStreamSubscription = Geolocator.getPositionStream().listen((Position position)
+    {
+      currentPosition = position;
+      myPosition = position;
+      LatLng mPosition = LatLng(position.latitude, position.longitude);
+
+      var rot = MapKitAssistant.getMarkerRotation(oldPos.latitude, oldPos.longitude, myPosition.latitude, myPosition.longitude);
+      
+      Marker animatingMarker = Marker(
+        markerId: MarkerId("animating"),
+        position: mPosition,
+        rotation: rot,
+        icon: animatingMarkerIcon,
+        infoWindow: InfoWindow(title: "Current Location"),
+
+      );
+
+      setState(() {
+           CameraPosition cameraPostion = new CameraPosition(target: mPosition, zoom: 17);
+           newRideGoogleMapController.animateCamera(CameraUpdate.newCameraPosition(cameraPostion));
+
+           markerSet.removeWhere((marker) => marker.markerId.value == "animating");
+           markerSet.add(animatingMarker);
+      });
+
+      oldPos = mPosition;
+      updateRideDetails();
+      
+      String rideRequestId = widget.rideDetails.ride_request_id;
+      Map locMap = {
+        "latitude":currentPosition.latitude.toString(),
+        "longitude": currentPosition.longitude.toString(),
+    };
+    newRequestsRef.child(rideRequestId).child("driver_location").set(locMap);
+
+     });
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) 
+  {
+    createIconMarker();
     return Scaffold(
       body: Stack(
         children: [
@@ -72,7 +146,8 @@ class _NewRideScreenState extends State<NewRideScreen>
               var pickUpLatLng = widget.rideDetails.pickup;
 
               await getPlaceDirection(currentLatLng, pickUpLatLng);
-
+              
+              getRideLiveLocationUpdates();
              
             }
            ),
@@ -99,7 +174,7 @@ class _NewRideScreenState extends State<NewRideScreen>
                  padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
                  child: Column(
                    children: [
-                     Text("10 minutes",
+                     Text(durationRide,
                      style: TextStyle(fontSize: 14, color: Colors.deepPurple)
                      ),
                      SizedBox(height: 6.0,),
@@ -152,14 +227,54 @@ class _NewRideScreenState extends State<NewRideScreen>
                          padding: EdgeInsets.symmetric(horizontal: 16.0),
                          // ignore: deprecated_member_use
                          child: RaisedButton(
-                           onPressed: () {},
-                           color: Theme.of(context).accentColor,
+                           onPressed: () async
+                           {
+                              if(status == "accepted")
+                              {
+                                status = "arrived";
+                                String rideRequestId = widget.rideDetails.ride_request_id;
+                                newRequestsRef.child(rideRequestId).child("status").set(status);
+
+                                setState(() {
+                                    btnTitle = "Start Trip";
+                                    btnColor = Colors.purple;                                                                  
+                                            });
+
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) => ProgressDialog(message: "Please wait... ",)
+                                    );
+
+                                  await getPlaceDirection(widget.rideDetails.pickup, widget.rideDetails.dropoff); 
+
+                              }
+                              else if(status == "arrived")
+                              {
+                                status = "on ride";
+                                String rideRequestId = widget.rideDetails.ride_request_id;
+                                newRequestsRef.child(rideRequestId).child("status").set(status);
+
+                                setState(() {
+                                    btnTitle = "End Trip";
+                                    btnColor = red;                                                                  
+                                            });
+
+                                     initTimer();     
+
+                              }
+                              else if(status == "on ride")
+                              {
+                                endTheTrip();
+                              }
+                           },
+                           color: btnColor,
                            child: Padding(
                              padding: EdgeInsets.all(17.0),
                              child: Row(
                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                children: [
-                                 Text("Arrived", 
+                                 Text(btnTitle, 
                                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: white),
                                  ),
                                  Icon(Icons.directions_car, color: white, size: 26.0,),
@@ -302,4 +417,98 @@ class _NewRideScreenState extends State<NewRideScreen>
     };
     newRequestsRef.child(rideRequestId).child("driver_location").set(locMap);
   }
+
+  void updateRideDetails() async
+  {
+    if(isRequestingDirection == false)
+    {
+     isRequestingDirection = true;
+     if(myPosition = null)
+    {
+      return;
+    }
+
+
+    var posLatLng = LatLng(myPosition.latitude, myPosition.longitude);
+    LatLng destinationLatLng;
+    if(status == "accepted")
+    {
+      destinationLatLng = widget.rideDetails.pickup;
+    }
+    else
+    {
+      destinationLatLng = widget.rideDetails.dropoff;
+    }
+
+    var directionDetails =  await AssistantMethods.obtainPlaceDirectionDetails(posLatLng, destinationLatLng);
+    if(directionDetails != null)
+    {
+      setState(() {
+              durationRide = directionDetails.durationText;
+            });
+    }
+    isRequestingDirection = false;
+    }
+    }
+
+    void initTimer()
+    {
+      const interval = Duration(seconds: 1);
+      timer = Timer.periodic(interval, (timer)
+      {
+        durationCounter = durationCounter+1;
+      }
+      );
+    }
+
+    void endTheTrip() async
+    {
+      timer.cancel();
+
+      showDialog(
+      context: context, 
+      builder: (BuildContext content) => ProgressDialog(message: "Please wait...",)
+    );
+    
+    var currentLatLng = LatLng(myPosition.latitude,myPosition.longitude);
+    var directionDetails = await AssistantMethods.obtainPlaceDirectionDetails(widget.rideDetails.pickup, currentLatLng);
+    Navigator.pop(context);
+
+    int fareAmount = AssistantMethods.calculateFares(directionDetails);
+
+    String rideRequestId = widget.rideDetails.ride_request_id;
+    newRequestsRef.child(rideRequestId).child("fares").set(fareAmount.toString());
+    newRequestsRef.child(rideRequestId).child("status").set("ended");
+    rideStreamSubscription.cancel();
+
+    showDialog(
+      context: context, 
+      builder: (BuildContext content) => CollectFareDialog(paymentMethod: widget.rideDetails.payment_method, fareAmount: fareAmount,),
+    );
+
+    saveEarnings(fareAmount);
+    }
+     
+     void saveEarnings(int fareAmount)
+     {
+       driversRef.child(currentfirebaseUser.uid).child("earnings").once().then((DataSnapshot dataSnapShot)
+       {
+         if( dataSnapShot.value == null)
+         {
+           double oldEarnings = double.parse(dataSnapShot.value.toString());
+           double totalEarnings = fareAmount + oldEarnings;
+
+           driversRef.child(currentfirebaseUser.uid).child("earnings").set(totalEarnings.toStringAsFixed(2));
+
+         }
+         else
+         {
+           double totalEarnings = fareAmount.toDouble();
+
+           //saving to the database
+           driversRef.child(currentfirebaseUser.uid).child("earnings").set(totalEarnings.toStringAsFixed(2));
+         }
+         
+       });
+     }
 }

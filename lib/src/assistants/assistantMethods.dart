@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jitney_cabs_driver/src/assistants/requestAssistant.dart';
 import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
-import 'package:jitney_cabs_driver/src/models/address.dart';
+//import 'package:jitney_cabs_driver/src/models/address.dart';
 import 'package:jitney_cabs_driver/src/models/directionDetails.dart';
-import 'package:jitney_cabs_driver/src/models/users.dart';
-import 'package:jitney_cabs_driver/src/providers/appData.dart';
-import 'package:provider/provider.dart';
+import 'package:jitney_cabs_driver/src/tabPages/homeTab.dart';
+//import 'package:jitney_cabs_driver/src/models/users.dart';
+//import 'package:jitney_cabs_driver/src/providers/appData.dart';
+//import 'package:provider/provider.dart';
 
 class AssistantMethods
 {
@@ -96,4 +98,17 @@ static int calculateFares(DirectionDetails directionDetails)
 //    );
 // }
 
+
+//~~~~Disabling the live location updates for a busy driver ~~~~~~~
+static void disableHomeTabLiveLocationUpdates()
+{
+  homeTabStreamSubscription.pause();
+  Geofire.removeLocation(currentfirebaseUser.uid);
+}
+
+static void enableHomeTabLiveLocationUpdates()
+{
+  homeTabStreamSubscription.resume();
+  Geofire.setLocation(currentfirebaseUser.uid, currentPosition.latitude, currentPosition.longitude);
+}
 }
