@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,6 +11,7 @@ import 'package:jitney_cabs_driver/src/helpers/style.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:jitney_cabs_driver/src/helpers/toastDisplay.dart';
 import 'package:jitney_cabs_driver/src/notifications/pushNotificationService.dart';
+import 'package:jitney_cabs_driver/src/models/drivers.dart';
 
 class HomeTab extends StatefulWidget {
 
@@ -27,7 +29,7 @@ Completer<GoogleMapController> _controllerGoogleMap = Completer();
 
 GoogleMapController newGoogleMapController;
 
-  Position currentPosition;
+  
 
   var geolocator = Geolocator();
 
@@ -61,6 +63,18 @@ GoogleMapController newGoogleMapController;
   void getCurrentDriverInfo() async
   {
      currentfirebaseUser = await FirebaseAuth.instance.currentUser;
+     driversRef.child(currentfirebaseUser.uid).once().then((DataSnapshot dataSnapshot)
+     {
+       if(dataSnapshot.value != null)
+       {
+        driversInformation = Drivers.fromSnapshot(dataSnapshot);
+
+         
+       }
+
+     });
+
+
      PushNotificationService pushNotificationService = PushNotificationService();
 
      pushNotificationService.initialize(context);

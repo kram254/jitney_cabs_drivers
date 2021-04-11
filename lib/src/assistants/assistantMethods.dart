@@ -12,33 +12,33 @@ import 'package:provider/provider.dart';
 
 class AssistantMethods
 {
-  static Future<String> searchCoordinateAddress(Position position, context) async
-  {
-    String placeAddress = "";
-    String st1, st2, st3, st4;
-    String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey";
+  // static Future<String> searchCoordinateAddress(Position position, context) async
+  // {
+  //   String placeAddress = "";
+  //   String st1, st2, st3, st4;
+  //   String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey";
 
-    var response  = await RequestAssistant.getRequest(url);
+  //   var response  = await RequestAssistant.getRequest(url);
 
-    if(response != "failed")
-    {
-      //placeAddress = response["results"][0]["formatted_address"];
-      st1 = response["results"][0]["address_components"][3]["long_name"];
-      st2 = response["results"][0]["address_components"][4]["long_name"];
-      st3 = response["results"][0]["address_components"][5]["long_name"];
-      st4 = response["results"][0]["address_components"][6]["long_name"];
+  //   if(response != "failed")
+  //   {
+  //     //placeAddress = response["results"][0]["formatted_address"];
+  //     st1 = response["results"][0]["address_components"][3]["long_name"];
+  //     st2 = response["results"][0]["address_components"][4]["long_name"];
+  //     st3 = response["results"][0]["address_components"][5]["long_name"];
+  //     st4 = response["results"][0]["address_components"][6]["long_name"];
 
-      placeAddress = st1 + ", " + st2 + ", " + st3 + ", " + st4;
+  //     placeAddress = st1 + ", " + st2 + ", " + st3 + ", " + st4;
 
-      Address userPickUpAddress = new Address();
-      userPickUpAddress.longitude = position.longitude;
-      userPickUpAddress.latitude = position.latitude;
-      userPickUpAddress.placeName = placeAddress;
+  //     Address userPickUpAddress = new Address();
+  //     userPickUpAddress.longitude = position.longitude;
+  //     userPickUpAddress.latitude = position.latitude;
+  //     userPickUpAddress.placeName = placeAddress;
 
-      Provider.of<AppData>(context, listen:  false).updatePickUpLocationAddress(userPickUpAddress);
-    }
-    return placeAddress;
-  } 
+  //     Provider.of<AppData>(context, listen:  false).updatePickUpLocationAddress(userPickUpAddress);
+  //   }
+  //   return placeAddress;
+  // } 
 
 static Future<DirectionDetails> obtainPlaceDirectionDetails (LatLng initialPosition, LatLng finalPosition) async
 {
@@ -80,20 +80,20 @@ static int calculateFares(DirectionDetails directionDetails)
 }
 
 // saving the users details into the firebase database
-static void getCurrentOnlineUserInfo() async
-{
-  firebaseUser = await FirebaseAuth.instance.currentUser;
-  String userId = firebaseUser.uid;
-  DatabaseReference reference = FirebaseDatabase.instance.reference().child("users").child(userId);
+// static void getCurrentOnlineUserInfo() async
+// {
+//   firebaseUser = await FirebaseAuth.instance.currentUser;
+//   String userId = firebaseUser.uid;
+//   DatabaseReference reference = FirebaseDatabase.instance.reference().child("users").child(userId);
 
-  reference.once().then((DataSnapshot dataSnapshot)
-  {
-    if(dataSnapshot.value != null)
-    {
-      userCurrentInfo = Users.fromSnapshot(dataSnapshot);
-    }
-  }
-   );
-}
+//   reference.once().then((DataSnapshot dataSnapshot)
+//   {
+//     if(dataSnapshot.value != null)
+//     {
+//       userCurrentInfo = Users.fromSnapshot(dataSnapshot);
+//     }
+//   }
+//    );
+// }
 
 }
