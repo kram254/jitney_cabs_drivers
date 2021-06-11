@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RequestAssistant {
-  static Future<dynamic> getRequest(String url) async
+  static Future<dynamic> getRequest(var url) async
   {
     //sending the httpRequest...
     http.Response response = await http.get(url);

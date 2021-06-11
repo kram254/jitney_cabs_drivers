@@ -15,3 +15,4 @@ StreamSubscription<Position> rideStreamSubscription;
 final assetsAudioPlayer = AssetsAudioPlayer();
 Position currentPosition;
 Drivers driversInformation;
+String title = " ";

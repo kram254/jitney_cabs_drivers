@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jitney_cabs_driver/main.dart';
+import 'package:jitney_cabs_driver/src/assistants/assistantMethods.dart';
 import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:jitney_cabs_driver/src/helpers/toastDisplay.dart';
-import 'package:jitney_cabs_driver/src/notifications/pushNotificationService.dart';
+import 'package:jitney_cabs_driver/src/notifications/pushNotificationServices.dart';
 import 'package:jitney_cabs_driver/src/models/drivers.dart';
 
 class HomeTab extends StatefulWidget {
@@ -27,8 +28,6 @@ class _HomeTabState extends State<HomeTab> {
 Completer<GoogleMapController> _controllerGoogleMap = Completer();
 
 GoogleMapController newGoogleMapController;
-
-  
 
   var geolocator = Geolocator();
 
@@ -66,19 +65,18 @@ GoogleMapController newGoogleMapController;
      {
        if(dataSnapshot.value != null)
        {
-        driversInformation = Drivers.fromSnapshot(dataSnapshot);
-
-         
+        driversInformation = Drivers.fromSnapshot(dataSnapshot);   
        }
 
      });
 
+  //    MyApp myApp = MyApp();
+ 
+  //    myApp.initializeApp(context);
+  //    myApp.getToken();
 
-     PushNotificationService pushNotificationService = PushNotificationService();
-
-     pushNotificationService.initialize(context);
-     pushNotificationService.getToken();
-  }
+       AssistantMethods.retrieveHistoryInfo(context);
+   }
 
   @override
   Widget build(BuildContext context) {

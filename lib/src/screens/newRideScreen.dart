@@ -182,7 +182,8 @@ class _NewRideScreenState extends State<NewRideScreen>
                      Row(
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: [
-                         Text("Karios", style: TextStyle(fontSize: 24.0),),
+                         Text(widget.rideDetails.rider_name, 
+                         style: TextStyle(fontSize: 24.0),),
                          Padding(
                            padding: EdgeInsets.only(right: 10.0),
                            child: Icon(Icons.phone_android_outlined),
@@ -197,7 +198,7 @@ class _NewRideScreenState extends State<NewRideScreen>
                          SizedBox(width: 18.0,),
                          Expanded(
                            child: Text(
-                             "Ruiru, Nairobi",
+                             widget.rideDetails.pickup_address,
                              style: TextStyle(fontSize: 18.0),
                              overflow: TextOverflow.ellipsis,
                            ),
@@ -213,7 +214,7 @@ class _NewRideScreenState extends State<NewRideScreen>
                          SizedBox(width: 18.0,),
                          Expanded(
                            child: Text(
-                             "Ngong Road, Nairobi",
+                             widget.rideDetails.dropoff_address,
                              style: TextStyle(fontSize: 18.0),
                              overflow: TextOverflow.ellipsis,
                            ),
@@ -416,6 +417,8 @@ class _NewRideScreenState extends State<NewRideScreen>
         "longitude": currentPosition.longitude.toString(),
     };
     newRequestsRef.child(rideRequestId).child("driver_location").set(locMap);
+
+    driversRef.child(currentfirebaseUser.uid).child("history").child(rideRequestId).set(true);
   }
 
   void updateRideDetails() async

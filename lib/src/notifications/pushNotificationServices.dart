@@ -9,31 +9,49 @@ import 'package:jitney_cabs_driver/src/models/rideDetails.dart';
 import 'package:jitney_cabs_driver/src/notifications/notificationDialog.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 
-class PushNotificationService
-{
 
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
+class PushNotificationServices extends StatefulWidget {
+
+  @override
+  _PushNotificationServicesState createState() => _PushNotificationServicesState();
+}
+
+class _PushNotificationServicesState extends State<PushNotificationServices> {
   
-
-  // Future initialize (context) async
-  // {
-  //   firebaseMessaging.configure(
-  //     onMessage:(Map<String, dynamic>message) async{
-  //       retrieveRideRequestInfo(getRideRequestId(message), context);
-  //     },
-  //     onLanch:(Map<String, dynamic>message) async{
-  //       retrieveRideRequestInfo(getRideRequestId(message), context);
-  //     },
-  //     onResume:(Map<String, dynamic>message) async{
-  //       retrieveRideRequestInfo(getRideRequestId(message), context);
-  //     },
-  //   ); 
-   
-  //  }
-
-
-  Future <String>  getToken () async
+  @override
+    void initState() {
+      // TODO: implement initState
+      super.initState();
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      try {
+        final data = message.data;
+        print(message.notification);
+        print(message.notification.title);
+      } catch (e) {
+        print(e);
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      try {
+        print('onResume: $message');
+        final data = message.data;
+        print(message.notification);
+      } catch (e) {
+        print(e);
+      }
+    });
+    }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
+  }
+}
+ 
+ Future <String> getToken () async
   {
     String token = await firebaseMessaging.getToken();
     print("This is the token ::");
@@ -42,8 +60,6 @@ class PushNotificationService
 
     firebaseMessaging.subscribeToTopic("alldrivers");
     firebaseMessaging.subscribeToTopic("allusers");
-
-    return token;
   }
 
   String getRideRequestId(Map<String, dynamic> message)
@@ -101,4 +117,3 @@ class PushNotificationService
         }
      });
   }
-}
