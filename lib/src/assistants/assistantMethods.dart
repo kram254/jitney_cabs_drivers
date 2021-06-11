@@ -83,7 +83,26 @@ static int calculateFares(DirectionDetails directionDetails)
 
   double totalLocalAmount = totalFareAmount * 109;
 
-  return totalLocalAmount.truncate();
+  if(rideType == "J!tney-Lux")
+  {
+    double result = (totalLocalAmount.truncate())*1.2;
+    return result.truncate();
+  }
+  else if(rideType == "J!tney-Fam")
+  {
+    double result = (totalLocalAmount.truncate())*0.95;
+    return result.truncate();
+  }
+  else if(rideType == "J!tney")
+  {
+    double result = (totalLocalAmount.truncate())*0.75;
+    return result.truncate();
+  }
+  else
+  {
+    return totalLocalAmount.truncate();
+  }
+
 }
 
 // saving the users details into the firebase database
@@ -120,6 +139,8 @@ static void enableHomeTabLiveLocationUpdates()
 
 static void retrieveHistoryInfo(context)
 {
+
+
   // retrieve and display earnings
   driversRef.child(currentfirebaseUser.uid).child("earnings").once().then((DataSnapshot dataSnapshot)
   {

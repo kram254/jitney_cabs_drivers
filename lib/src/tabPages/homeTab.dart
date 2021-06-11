@@ -45,6 +45,69 @@ GoogleMapController newGoogleMapController;
       getCurrentDriverInfo();
     }
 
+  getRideType()
+  {
+    driversRef.child(currentfirebaseUser.uid).child("car_details").child("type").once().then((DataSnapshot snapshot)
+    {
+      if(snapshot.value != null)
+      {
+        setState(() {
+          rideType = snapshot.value.toString();
+        });
+      }
+    });
+  }
+  getRatings()
+    {
+  // ratings
+  driversRef.child(currentfirebaseUser.uid).child("ratings").once().then((DataSnapshot dataSnapshot)
+  {
+    if(dataSnapshot.value != null )
+    {
+      double ratings = double.parse(dataSnapshot.value.toString());
+       setState(() {
+         starCounter = ratings;
+       });
+
+                  if(starCounter <= 1.5)
+                  {
+                    setState(() {
+                      title = "Very bad"; 
+                    });                    
+                    return;                   
+                  }
+                  if(starCounter <= 2.5)
+                  {
+                    setState(() {
+                      title = "Bad"; 
+                    }); 
+                     return;
+                  }
+                  if(starCounter <= 3.5)
+                  {
+                    setState(() {
+                      title = "Good"; 
+                    });
+                    return;
+                  }
+                  if(starCounter <= 4.5)
+                  {
+                    setState(() {
+                      title = "Very good"; 
+                    });
+                    return;
+                  }
+                  if(starCounter <= 5.5)
+                  {
+                    setState(() {
+                      title = "Excellent"; 
+                    });
+                      return;
+                  }
+    }
+  });
+ }
+
   void locatePosition() async
   {
   Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -76,6 +139,8 @@ GoogleMapController newGoogleMapController;
   //    myApp.getToken();
 
        AssistantMethods.retrieveHistoryInfo(context);
+       getRatings();
+       getRideType();
    }
 
   @override

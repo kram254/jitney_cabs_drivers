@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jitney_cabs_driver/src/assistants/assistantMethods.dart';
+import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
 
 class CollectFareDialog extends StatelessWidget {
@@ -29,7 +30,7 @@ class CollectFareDialog extends StatelessWidget {
           children: [
             SizedBox(height: 22.0,),
 
-            Text("Trip Fare"),
+            Text("Trip Fare ("+ rideType.toUpperCase() + " )"),
 
             SizedBox(height: 22.0,),
 
