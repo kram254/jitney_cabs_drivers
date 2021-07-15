@@ -125,10 +125,10 @@ class _MyAppState extends State<MyApp> {
      return ChangeNotifierProvider(
        create: (context) => AppData(),
        child: MaterialApp(
-         title: 'J!tney Driver',         
+         title: 'J!tney Driver',     
          theme: ThemeData(
            //fontFamily: "Brand Bold",
-           primarySwatch: orange,
+           primarySwatch: Colors.orange,
            visualDensity: VisualDensity.adaptivePlatformDensity,
          ),
          initialRoute: FirebaseAuth.instance.currentUser == null ? LoginScreen.idScreen : HomeScreen.idScreen,

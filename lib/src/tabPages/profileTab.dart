@@ -13,10 +13,23 @@ class ProfileTab extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children:[
+              SizedBox(height: 25.0),
               Text(
                 driversInformation.name,
-                style: TextStyle(fontSize: 65.0, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "Signatra"),
+                style: TextStyle(fontSize: 35.0, color: Colors.blueAccent, fontWeight: FontWeight.bold, 
+                fontFamily: "Vanberg"),
               ),
+
+              SizedBox(
+                height: 20.0,
+                width: 200.0,
+                child: Divider(
+                  height: 2.0, 
+                  thickness: 2.0,
+                  color: Colors.grey,
+                  ),
+              ),
+              SizedBox(height: 10.0),
 
               Text(
                 title + " driver",
@@ -30,7 +43,7 @@ class ProfileTab extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 40.0),
+              SizedBox(height: 30.0),
               
               InfoCard(
                 text:driversInformation.phone,
@@ -53,14 +66,15 @@ class ProfileTab extends StatelessWidget {
               ),
 
                InfoCard(
-                text:driversInformation.car_color + " " + driversInformation.car_model + " " + driversInformation.car_number,
+                text:driversInformation.car_color + "  " + driversInformation.car_model + "  " + driversInformation.car_number,
                 icon: Icons.car_repair,
                 onPressed: () async
                 {
                   print("This is car details");
                 },
-
               ),
+
+              SizedBox(height: 30.0),
 
               GestureDetector(
               onTap: ()
@@ -78,25 +92,24 @@ class ProfileTab extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 115.0),
               child: ListTile(
               trailing: Icon(
-                Icons.follow_the_signs_outlined,
+                Icons.logout,
                color:  Colors.white,
 
                 ),
               title: Text(
-                  "Signed out",
+                  "Sign out",
               textAlign:  TextAlign.center,    
               style:
               TextStyle(
-              color: Colors.white,
-              fontSize: 16.0,
+              color: Colors.white, fontWeight: FontWeight.w600,
+              fontSize: 20.0,
               fontFamily: "Brand bold",
 
-            ),
-          ),
-        ),
-      ),
-    )
-
+              ),
+             ),
+             ),
+             ),
+             ),
             ],
           ),
           ),

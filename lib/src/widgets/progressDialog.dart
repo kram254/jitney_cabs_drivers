@@ -26,8 +26,7 @@ ProgressDialog({this.message});
               CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(black),),
               SizedBox(width: 25.0,),
               Text(message,
-              style: TextStyle(color: black, fontSize: 10.0),
-              
+              style: TextStyle(color: black, fontSize: 10.0),            
               )
             ],
           ),

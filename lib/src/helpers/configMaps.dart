@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:jitney_cabs_driver/src/models/drivers.dart';
 import 'package:jitney_cabs_driver/src/models/users.dart';
 
-String mapKey = "AIzaSyCG1-AWjvpqmmq1HaLggAPiG1YV3u0ak8Y";
+String mapKey = "AIzaSyCCkK4ZL7B_cnaqeTsBAt2ypF6iJLtQA_g";
 
 User firebaseUser; 
 Users userCurrentInfo;
@@ -17,4 +17,4 @@ Position currentPosition;
 Drivers driversInformation;
 String title = " ";
 double starCounter = 0.0;
-String rideType = " ";
+String rideType = " "; 

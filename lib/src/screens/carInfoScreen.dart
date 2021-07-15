@@ -22,7 +22,7 @@ class CarInfoScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 22.0),
-              Image.asset("images/logo1.png"),
+              Image.asset("images/logo3B.png"),
               Padding(
                 padding: EdgeInsets.fromLTRB(22.0, 22.0, 22.0, 32.0),
                 child: Column(

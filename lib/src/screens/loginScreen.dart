@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: orange ,
+      backgroundColor: white,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(8.0),
@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
             children: [
               SizedBox(height: 45.0),
               Image(
-                image: AssetImage("images/logo1.png"),
+                image: AssetImage("images/logo3B.png"),
                 height: 350,
                 width: 350,
                 alignment: Alignment.center,
@@ -124,7 +124,7 @@ class LoginScreen extends StatelessWidget {
         barrierDismissible: false,
         builder:(BuildContext context)
         {
-          return ProgressDialog(message: "Jitney is authenticating you please wait ...",);
+          return ProgressDialog(message: "Jitney is authenticating...",);
         }
         );
 
@@ -156,7 +156,7 @@ class LoginScreen extends StatelessWidget {
         }
       });
       
-      
+    
      }
      else
      {

@@ -64,12 +64,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.credit_card_outlined),
-              label: "Earnings",
+              icon: Icon(Icons.star_outline_rounded),
+              label: "Ratings",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.star_outline_sharp),
-              label: "Rating",
+              icon: Icon(Icons.credit_card_outlined),
+              label: "Earnings",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),

@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     
    <application
-        android:label="jitney_cabs_driver"
+   android:name="androidx.multidex.MultiDexApplication" 
+        android:label="©driver"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -44,7 +45,7 @@
 
         </activity>
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCG1-AWjvpqmmq1HaLggAPiG1YV3u0ak8Y"/>
+               android:value="AIzaSyCCkK4ZL7B_cnaqeTsBAt2ypF6iJLtQA_g"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

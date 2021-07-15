@@ -47,6 +47,7 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+            multiDexKeepProguard file('multidex-main-dex-list.pro')
             signingConfig signingConfigs.debug
         }
     }
@@ -61,4 +62,5 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging:21.0.0'
+    implementation "androidx.multidex:multidex:2.0.1"
 }
