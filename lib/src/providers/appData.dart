@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:jitney_cabs_driver/src/models/address.dart';
+//import 'package:jitney_cabs_driver/src/models/address.dart';
 import 'package:jitney_cabs_driver/src/models/history.dart';
 
 class AppData extends ChangeNotifier
@@ -15,9 +15,10 @@ void updateEarnings(String updateEarnings)
   notifyListeners();
 }  
 
-void updateTripsCounter(int tripCounter)
+void updateTripsCounter( int tripCounter)
 {
   countTrips = tripCounter;
+  
   notifyListeners();
 }
 

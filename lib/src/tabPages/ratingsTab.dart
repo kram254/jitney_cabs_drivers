@@ -1,4 +1,4 @@
-import 'package:firebase_database/firebase_database.dart';
+//import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
@@ -17,7 +17,7 @@ class _RatingsTabState extends State<RatingsTab> {
       body: Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
-          ),
+        ),
         backgroundColor: Colors.transparent,
         child: Container(
           margin: EdgeInsets.all(5.0),
@@ -25,25 +25,27 @@ class _RatingsTabState extends State<RatingsTab> {
           decoration: BoxDecoration(
             color: white,
             borderRadius: BorderRadius.circular(5.0),
-                   
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 22.0,),
-    
-              Text("Your Rating",
-              style: TextStyle(color: Colors.black54, fontSize: 20.0, fontFamily: "Brand bold"),
+              SizedBox(
+                height: 22.0,
               ),
-    
-              SizedBox(height: 22.0,),
-    
+              Text(
+                "Your Rating",
+                style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 20.0,
+                    fontFamily: "Brand bold"),
+              ),
+              SizedBox(
+                height: 22.0,
+              ),
               Divider(),
-    
-              SizedBox(height: 16.0,),
-
-    
-              
+              SizedBox(
+                height: 16.0,
+              ),
               SmoothStarRating(
                 rating: starCounter,
                 color: Colors.yellow,
@@ -51,18 +53,17 @@ class _RatingsTabState extends State<RatingsTab> {
                 starCount: 5,
                 size: 45,
                 isReadOnly: true,
-                
               ),
-    
               SizedBox(height: 14.0),
-
-              Text(title, style: TextStyle(fontSize: 55.0, fontFamily: "Brand bold", color: Colors.grey)),
-              SizedBox(height:16.0),
-    
-              
+              Text(title,
+                  style: TextStyle(
+                      fontSize: 55.0,
+                      fontFamily: "Brand bold",
+                      color: Colors.grey)),
+              SizedBox(height: 16.0),
             ],
           ),
-        ),  
+        ),
       ),
     );
   }

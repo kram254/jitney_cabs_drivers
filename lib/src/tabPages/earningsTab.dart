@@ -16,38 +16,64 @@ class EarningsTab extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 70),
             child: Column(
               children: [
-                Text('Total earnings', style: TextStyle(color: Colors.white,),),
-                Text("\$${Provider.of<AppData>(context, listen: false).earnings}", style: TextStyle(color: Colors.white, fontSize: 50, fontFamily: "Brand bold"),),
+                Text(
+                  'Total earnings',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  "\$${Provider.of<AppData>(context, listen: false).earnings}",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 50,
+                      fontFamily: "Brand bold"),
+                ),
               ],
             ),
-            ),
+          ),
         ),
-
         TextButton(
           //padding: EdgeInsets.all(0),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryScreen()));
-          }, 
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => HistoryScreen()));
+          },
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 18.0),
             child: Row(
               children: [
-                Image.asset("images/jitneylux.png",width: 70.0,),
-                SizedBox(width: 16,),
-                Text("Total trips", style: TextStyle(fontSize: 16.0),),
-                Expanded(child: Container(child: Text(Provider.of<AppData>(context, listen: false).countTrips.toString(),
-                 textAlign: TextAlign.end, style: TextStyle(fontSize: 18.0,),
-                )
-                )
+                Image.asset(
+                  "images/jitneylux.png",
+                  width: 70.0,
                 ),
+                SizedBox(
+                  width: 16,
+                ),
+                Text(
+                  "Total trips",
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                Expanded(
+                    child: Container(
+                        child: Text(
+                  Provider.of<AppData>(context, listen: false)
+                      .countTrips
+                      .toString(),
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ))),
               ],
             ),
-            ),
           ),
-
-          Divider(height: 2.0, thickness: 2.0,),
+        ),
+        Divider(
+          height: 2.0,
+          thickness: 2.0,
+        ),
       ],
-      
     );
   }
 }

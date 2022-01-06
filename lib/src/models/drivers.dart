@@ -14,13 +14,12 @@ class Drivers
 
   Drivers.fromSnapshot(DataSnapshot dataSnapShot)
   {
-    id = dataSnapShot.key;
     name = dataSnapShot.value["name"];
     phone = dataSnapShot.value["phone"];
     email = dataSnapShot.value["email"];
+    id = dataSnapShot.key;
     car_color = dataSnapShot.value["car_details"]["car_color"];
     car_model= dataSnapShot.value["car_details"]["car_model"];
     car_number= dataSnapShot.value["car_details"]["car_number"];
-
   }
 }

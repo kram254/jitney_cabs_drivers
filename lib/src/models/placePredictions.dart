@@ -5,6 +5,7 @@ class PlacePredictions
   String place_id;
 
   PlacePredictions({this.secondary_text, this.name_text, this.place_id});
+  
 
   PlacePredictions.fromJson(Map<String, dynamic> json)
   {

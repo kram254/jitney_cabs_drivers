@@ -95,7 +95,7 @@ class PushNotificationService
 
           showDialog(
             context: context,
-            barrierDismissible: false,
+            barrierDismissible:  false,
             builder:(BuildContext context) => NotificationDialog(rideDetails: rideDetails,),
           );
         }

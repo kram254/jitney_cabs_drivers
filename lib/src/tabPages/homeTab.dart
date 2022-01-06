@@ -10,7 +10,7 @@ import 'package:jitney_cabs_driver/src/helpers/configMaps.dart';
 import 'package:jitney_cabs_driver/src/helpers/style.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:jitney_cabs_driver/src/helpers/toastDisplay.dart';
-import 'package:jitney_cabs_driver/src/notifications/pushNotificationServices.dart';
+//import 'package:jitney_cabs_driver/src/notifications/pushNotificationServices.dart';
 import 'package:jitney_cabs_driver/src/models/drivers.dart';
 
 class HomeTab extends StatefulWidget {
@@ -30,6 +30,7 @@ Completer<GoogleMapController> _controllerGoogleMap = Completer();
 GoogleMapController newGoogleMapController;
 
   var geolocator = Geolocator();
+
 
   String driverStatusText = "Offline now - Go online";
 
